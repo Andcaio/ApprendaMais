@@ -698,3 +698,25 @@ button.bloco:not([aria-disabled="true"]):hover { background: var(--marca-clara);
 .mapa__cenarios > h2 { margin: 0; }
 .mapa__cenarios .lista-marcada { font-size: .9375rem; }
 @media (max-width: 1000px) { .mapa__layout { grid-template-columns: 1fr; } .mapa__cenarios { position: static; } }
+
+/* ================= Correção: evitar rolagem horizontal da página no celular =================
+   Itens de grade com conteúdo largo (grade de 7 dias, tabelas) não podem alargar a coluna. */
+.perfil-tutor > *, .busca > *, .analise > *, .disp > *, .perfil > *, .mapa__layout > *,
+.painel-tutor > *, .autorizacao > *, .auth > *, .conversas > * { min-width: 0; }
+@media (max-width: 1000px) {
+  .perfil-tutor, .busca, .analise, .mapa__layout { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 900px) {
+  .perfil, .painel-tutor { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 800px) {
+  .autorizacao, .auth, .conversas { grid-template-columns: minmax(0, 1fr); }
+}
+.disp { grid-template-columns: minmax(0, 1fr); }
+.app > * { min-width: 0; }
+@media (max-width: 900px) { .app { grid-template-columns: minmax(0, 1fr); } }
+/* Textos só para leitor de tela dentro de áreas com rolagem própria ficam presos a elas */
+.tabela-wrap, .dias, .semana, .abas, .lateral nav, .conversas__lista, .chat__mensagens, .resultados__topo { position: relative; }
+.hero > * { min-width: 0; }
+@media (max-width: 860px) { .hero { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 420px) { .hero__grade { padding: .75rem; } .mini-semana { gap: .3rem; } .bloco--hero { font-size: .75rem; padding: .3rem .15rem; } }
