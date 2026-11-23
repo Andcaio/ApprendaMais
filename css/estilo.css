@@ -835,3 +835,10 @@ body:has(.apresentador[open]) { overflow: hidden; }
 .hero > * { min-width: 0; }
 @media (max-width: 860px) { .hero { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 420px) { .hero__grade { padding: .75rem; } .mini-semana { gap: .3rem; } .bloco--hero { font-size: .75rem; padding: .3rem .15rem; } }
+
+/* ================= Transição de tinta entre telas ================= */
+.tinta { position: fixed; inset: 0; z-index: 500; overflow: hidden; pointer-events: none; visibility: hidden; }
+.tinta--ativa { visibility: visible; pointer-events: auto; cursor: progress; }
+.tinta__mancha { position: absolute; left: 50%; top: 50%; width: 200px; height: 200px; margin: -100px 0 0 -100px; overflow: visible; transform: scale(0); }
+.tinta__mancha path { fill: var(--tinta); }
+.tinta__mancha--2 path { fill: var(--tinta-escura); }

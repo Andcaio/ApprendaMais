@@ -252,7 +252,7 @@
 
   function telaConversas(papel, comId) {
     return {
-      caminho: comId ? `/${papel}/conversas/:id` : `/${papel}/conversas`, area: papel, menu: `/${papel}/conversas`, titulo: 'Conversas', grupo: GRUPO[papel],
+      caminho: comId ? `/${papel}/conversas/:id` : `/${papel}/conversas`, area: papel, menu: `/${papel}/conversas`, titulo: 'Conversas', grupo: GRUPO[papel], familia: `${papel}-conversas`,
       uc: ['UC11.1', 'UC11.2'], exemplo: comId ? (papel === 'aluno' ? '#/aluno/conversas/g1' : '#/tutor/conversas/g9') : null,
       variacoes: comId && papel === 'aluno' ? [['Conversa encerrada (somente leitura)', '#/aluno/conversas/g4'], ['Conversa sem mensagens', '#/aluno/conversas/g3'], ['Aula ainda não confirmada', '#/aluno/conversas/g2']] : null,
       render({ params }) {
