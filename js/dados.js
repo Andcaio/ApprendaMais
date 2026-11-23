@@ -235,6 +235,13 @@
       { id: 'm6', agendamentoId: 'g1', remetenteId: 't1', texto: 'Oi, Pedro! Na segunda vamos de trigonometria? Já deixei o link da reunião na agenda.', dataHora: '2026-11-18T09:10' },
       { id: 'm7', agendamentoId: 'g1', remetenteId: 'a1', texto: 'Isso! Tenho dificuldade no ciclo trigonométrico e nas relações entre seno e cosseno.', dataHora: '2026-11-18T12:32' },
       { id: 'm8', agendamentoId: 'g9', remetenteId: 'a6', texto: 'Boa tarde! Vou precisar de ajuda com logaritmos para o simulado de sábado.', dataHora: '2026-11-17T15:03' },
+      { id: 'm9', agendamentoId: 'g10', remetenteId: 't1', texto: 'Oi, Ana Luísa! Confirmei nossa aula de quinta, 26/11, às 18:00. O que você está vendo em Cálculo I agora?', dataHora: '2026-11-17T12:46' },
+      { id: 'm10', agendamentoId: 'g10', remetenteId: 'a2', texto: 'Oi, Rafael! Estamos em derivadas. A P2 é no dia 28/11 e eu ainda me enrolo na regra da cadeia e na derivada implícita.', dataHora: '2026-11-17T13:10' },
+      { id: 'm11', agendamentoId: 'g10', remetenteId: 't1', texto: 'Dá tempo de sobra. Me diga quais questões da lista mais travaram, que eu preparo os exemplos em cima delas.', dataHora: '2026-11-17T13:22' },
+      { id: 'm12', agendamentoId: 'g10', remetenteId: 'a2', texto: 'São da 12 à 18 da lista 4. A pior é a 15: derivar sen(x² · eˣ). Sempre esqueço uma parte.', dataHora: '2026-11-17T19:48' },
+      { id: 'm13', agendamentoId: 'g10', remetenteId: 't1', texto: 'Essa é clássica: regra da cadeia por fora e regra do produto por dentro. Antes da aula, revise a regra do produto, que a gente parte dela.', dataHora: '2026-11-18T08:05' },
+      { id: 'm14', agendamentoId: 'g10', remetenteId: 'a2', texto: 'Combinado! Se sobrar tempo, posso tirar uma dúvida de limite no final?', dataHora: '2026-11-18T08:31' },
+      { id: 'm15', agendamentoId: 'g10', remetenteId: 't1', texto: 'Pode sim, separo os últimos 10 minutos para isso. Até quinta!', dataHora: '2026-11-18T09:02' },
     ];
 
     const documentos = [
@@ -265,7 +272,7 @@
     ];
 
     return {
-      versao: 1,
+      versao: 2,
       seq: 100,
       sessao: { aluno: 'a1', tutor: 't1', admin: 'ad1' },
       disputaResolvida: false,

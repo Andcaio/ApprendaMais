@@ -13,7 +13,8 @@
       const s = localStorage.getItem(CHAVE);
       if (s) {
         const dados = JSON.parse(s);
-        if (dados && dados.versao === 1) { AP.db = dados; return; }
+        /* Dados salvos de uma versão anterior dos exemplos são descartados */
+        if (dados && dados.versao === 2) { AP.db = dados; return; }
       }
     } catch (e) { /* armazenamento indisponível: segue com os dados de exemplo */ }
     AP.db = AP.criarDadosIniciais();
