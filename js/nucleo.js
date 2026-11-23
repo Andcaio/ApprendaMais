@@ -195,6 +195,7 @@
     tablet: '<rect x="4" y="2.5" width="16" height="19" rx="2"/><path d="M11 18.5h2"/>',
     celular: '<rect x="6.5" y="2.5" width="11" height="19" rx="2"/><path d="M11 18.5h2"/>',
     apresentar: '<path d="M7 4.5v15l12.5-7.5z"/>',
+    minimizar: '<path d="m6 15 6-6 6 6"/>',
   };
   AP.icone = (n, cls = '') => `<svg class="icone ${cls}" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICONES[n] || ''}</svg>`;
 
@@ -422,9 +423,91 @@
       <p class="barra__marca"><strong>Protótipo Apprenda+</strong> <span>Data simulada: ${AP.fmtDia(AP.AGORA)}/2026, ${AP.fmtHora(AP.AGORA)}</span></p>
       <nav class="barra__perfis" aria-label="Ver o protótipo como">${perfis.map(([t, h, areas]) => `<a href="${h}"${areas.includes(rota.area) ? ' aria-current="true"' : ''}>${t}</a>`).join('')}</nav>
       <p class="barra__ref">${codigos}<span>${AP.esc(rota.titulo)}</span></p>
-      <div class="barra__acoes"><a href="#/mapa">Mapa de telas</a><button type="button" data-restaurar>Restaurar dados</button><button type="button" data-ocultar>Ocultar barra</button></div>
+      <div class="barra__acoes"><a href="#/mapa">Mapa de telas</a><button type="button" data-restaurar>Restaurar dados</button></div>
+      <button type="button" class="barra__minimizar" data-minimizar aria-expanded="true" aria-controls="barra-prototipo" title="Minimizar a barra (vira um botão no canto da tela)">${AP.icone('minimizar')}<span>Minimizar</span></button>
     </div>`;
+    /* Botão que aparece no lugar da barra minimizada: mostra com qual ator você está vendo o protótipo */
+    const ator = (perfis.find(([, , areas]) => areas.includes(rota.area)) || [])[0];
+    const btn = document.getElementById('mostrar-barra');
+    btn.innerHTML = `<span class="mostrar-barra__marca" aria-hidden="true">+</span><span>Protótipo</span>${ator ? `<span class="mostrar-barra__ator">${ator}</span>` : ''}`;
+    btn.setAttribute('aria-label', `Mostrar a barra do protótipo${ator ? ` (vendo como ${ator})` : ''}`);
   };
+
+  /* Barra minimizada: o estado e o canto do botão ficam guardados neste navegador */
+  const CHAVE_BARRA = 'apprenda-barra-prototipo';
+  const CANTOS = ['baixo-dir', 'baixo-esq', 'cima-dir', 'cima-esq'];
+  function lerBarra() {
+    let p = {};
+    try { p = JSON.parse(localStorage.getItem(CHAVE_BARRA)) || {}; } catch (e) { /* sem armazenamento */ }
+    return { minimizada: !!p.minimizada, canto: CANTOS.includes(p.canto) ? p.canto : 'baixo-dir' };
+  }
+  function gravarBarra(p) { try { localStorage.setItem(CHAVE_BARRA, JSON.stringify(p)); } catch (e) { /* sem armazenamento */ } }
+
+  function iniciarBarraMinimizada() {
+    const btn = document.getElementById('mostrar-barra');
+    const pref = lerBarra();
+    btn.dataset.canto = pref.canto;
+    btn.title = 'Mostrar a barra do protótipo. Arraste para levar o botão a outro canto.';
+    btn.setAttribute('aria-expanded', 'false');
+    btn.setAttribute('aria-controls', 'barra-prototipo');
+    document.body.classList.toggle('barra-minimizada', pref.minimizada);
+
+    AP.minimizarBarra = function (minimizar, focar = true) {
+      pref.minimizada = minimizar;
+      gravarBarra(pref);
+      document.body.classList.toggle('barra-minimizada', minimizar);
+      if (!focar) return;
+      const alvo = minimizar ? btn : document.querySelector('[data-minimizar]');
+      if (alvo) alvo.focus();
+    };
+
+    /* Arrastar: o botão segue o ponteiro e, ao soltar, encaixa no canto mais próximo */
+    let arrasto = null;
+    btn.addEventListener('pointerdown', (e) => {
+      if (e.button !== 0) return;
+      delete btn.dataset.arrastou;
+      arrasto = { x: e.clientX, y: e.clientY, moveu: false, ret: btn.getBoundingClientRect() };
+      btn.setPointerCapture(e.pointerId);
+    });
+    btn.addEventListener('pointermove', (e) => {
+      if (!arrasto) return;
+      const dx = e.clientX - arrasto.x;
+      const dy = e.clientY - arrasto.y;
+      if (!arrasto.moveu && Math.hypot(dx, dy) < 6) return;
+      arrasto.moveu = true;
+      btn.classList.add('arrastando');
+      btn.style.transform = `translate(${dx}px, ${dy}px)`;
+    });
+    const soltar = (e) => {
+      if (!arrasto) return;
+      const a = arrasto;
+      arrasto = null;
+      btn.classList.remove('arrastando');
+      if (!a.moveu) return;
+      btn.dataset.arrastou = '1';
+      const cx = a.ret.left + a.ret.width / 2 + (e.clientX - a.x);
+      const cy = a.ret.top + a.ret.height / 2 + (e.clientY - a.y);
+      const antes = btn.getBoundingClientRect();
+      pref.canto = `${cy < window.innerHeight / 2 ? 'cima' : 'baixo'}-${cx < window.innerWidth / 2 ? 'esq' : 'dir'}`;
+      gravarBarra(pref);
+      btn.style.transform = '';
+      btn.dataset.canto = pref.canto;
+      /* Desliza da posição em que foi solto até o canto */
+      const depois = btn.getBoundingClientRect();
+      btn.style.transition = 'none';
+      btn.style.transform = `translate(${antes.left - depois.left}px, ${antes.top - depois.top}px)`;
+      btn.getBoundingClientRect();
+      btn.style.transition = 'transform .22s ease-out';
+      btn.style.transform = '';
+      setTimeout(() => { btn.style.transition = ''; }, 260);
+    };
+    btn.addEventListener('pointerup', soltar);
+    btn.addEventListener('pointercancel', soltar);
+    btn.addEventListener('click', () => {
+      if (btn.dataset.arrastou) { delete btn.dataset.arrastou; return; }
+      AP.minimizarBarra(false);
+    });
+  }
 
   AP.iniciar = function () {
     AP.carregar();
@@ -435,9 +518,9 @@
         const ok = await AP.confirmar({ titulo: 'Restaurar dados de exemplo?', texto: 'Tudo o que você fez no protótipo (cadastros, solicitações, mensagens) será apagado e os dados iniciais voltam.', botao: 'Restaurar dados' });
         if (ok) { AP.restaurar(); AP.renderizar(true); AP.avisar('Dados de exemplo restaurados.'); }
       }
-      if (e.target.closest('[data-ocultar]')) document.body.classList.add('barra-oculta');
+      if (e.target.closest('[data-minimizar]')) AP.minimizarBarra(true);
     });
-    document.getElementById('mostrar-barra').addEventListener('click', () => document.body.classList.remove('barra-oculta'));
+    iniciarBarraMinimizada();
     document.getElementById('pular').addEventListener('click', () => { const m = document.getElementById('conteudo'); if (m) m.focus(); });
     window.addEventListener('hashchange', () => AP.renderizar(true));
     AP.renderizar(true);

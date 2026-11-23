@@ -7,6 +7,7 @@ Protótipo em HTML, CSS e JavaScript puro, feito a partir da documentação **Ap
 Dê dois cliques em `index.html`. Não precisa instalar nada nem rodar servidor.
 
 - A **barra azul no topo** existe só no protótipo. Ela permite trocar de ator (Visitante, Aluno, Tutor, Administrador, Responsável legal), mostra os casos de uso da tela aberta e tem o link **Mapa de telas**.
+- O botão **Minimizar**, no canto direito da barra, transforma a barra num botão pequeno (“Protótipo · ator”). Clique nele para abrir a barra de novo, ou arraste para o canto da tela que preferir. A escolha fica salva no navegador.
 - A **data é simulada**: quinta-feira, 19/11/2026, 10:00. As regras de prazo (cancelar até 24 h antes, chat aberto até 24 h depois da aula) usam essa data.
 - O que você fizer (cadastros, solicitações, mensagens) fica salvo no navegador. Use **Restaurar dados** na barra para voltar ao início.
 - Para tirar print sem a barra, abra `index.html?limpo`. O Mapa de telas também tem um link “Sem barra” para cada tela.
