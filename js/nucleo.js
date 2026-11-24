@@ -383,11 +383,11 @@
     return { x: window.innerWidth / 2, y: window.innerHeight / 2 };
   }
 
-  /* Só anima troca de tela de verdade: abas, filtros e outra conversa da mesma lista trocam sem tinta */
+  /* Só anima as mudanças grandes, quando muda a área (visitante, aluno, tutor, administrador, responsável, mapa).
+     Dentro da mesma área (menu lateral, abas, filtros, conversas) a troca é direta. */
   function deveTransicionar(rota) {
     const ant = AP.rotaAtual;
-    if (!AP._jaRenderizou || !ant || ant === rota) return false;
-    if (ant.familia && ant.familia === rota.familia) return false;
+    if (!AP._jaRenderizou || !ant || ant.area === rota.area) return false;
     if (document.body.classList.contains('limpo')) return false;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
     return true;
