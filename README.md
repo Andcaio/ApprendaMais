@@ -13,7 +13,7 @@ Dê dois cliques em `index.html`. Não precisa instalar nada nem rodar servidor.
 
 ## Telas e casos de uso
 
-As imagens estão em `capturas/`, prontas para a seção 11 (Telas do Software) da documentação.
+As imagens estão em `capturas/`. As seções 11 (Telas do Software) e 12 (Matriz de Rastreabilidade) já montadas com essas imagens estão no arquivo `Apprenda+ - Secoes 11 e 12.docx`, na pasta acima desta.
 
 | Requisito | Caso de uso | Tela | Captura |
 |---|---|---|---|
@@ -25,10 +25,10 @@ As imagens estão em `capturas/`, prontas para a seção 11 (Telas do Software) 
 | RF02 | UC02.3 Editar perfil | Meu perfil (aluno e tutor), com resumo de atividades | `24-…`, `32-…` |
 | RF03 | UC03.1 Moderar usuários | Pesquisa de usuários e cadastro com suspender/reativar/bloquear | `36-…`, `37-…`, `38-…` |
 | RF04 | UC04.1 Aprovar/Rejeitar tutor | Lista de análise, critérios RN01, rejeição com justificativa e reenvio pelo tutor | `33-…`, `34-…`, `35-…`, `13-…` |
-| RF05 | UC05.1 / UC05.2 Catálogo de matérias | Minhas disciplinas: cadastrar oferta, editar preço, remover | `28-…`, `29-…` |
+| RF05 | UC05.1 / UC05.2 Catálogo de matérias | Minhas disciplinas: cadastrar oferta, editar preço, remover | `28-…`, `29-…`, `44-…`, `45-…` |
 | RF06 | UC06.1 Pesquisar e filtrar tutores | Busca com filtros e ordenação, sem resultado | `14-…`, `15-…` |
 | RF06 | UC06.2 Visualizar detalhes do tutor | Perfil público do tutor, perfil indisponível | `16-…`, `18-…` |
-| RF07 | UC07.1 / UC07.2 Disponibilidade | Minha disponibilidade: intervalos divididos em blocos de 60 min | `30-…` |
+| RF07 | UC07.1 / UC07.2 Disponibilidade | Minha disponibilidade: intervalos divididos em blocos de 60 min, remover bloco, editar intervalo | `30-…`, `46-…`, `47-…` |
 | RF08 | UC08.1 Solicitar agendamento | Escolha de matéria e bloco, confirmação | `16-…`, `17-…` |
 | RF08 | UC08.2 Reservar horário e impedir dupla seleção | Erro de reserva simultânea | `43-…` |
 | RF08 | UC08.3 Aceitar/Recusar agendamento | Solicitações e painel do tutor | `25-…`, `26-…` |
